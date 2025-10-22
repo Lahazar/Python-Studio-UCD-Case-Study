@@ -1,28 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <title>Global Vaccine Trends</title>
-
-  <!-- Connects to the CSS file for styling -->
+  <!-- Connects HTML to external CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!--HEADER AREA -->
+  <!-- Top header with logo, search bar, and links -->
   <header>
-    <!-- Left side: WHO logo -->
     <div class="header-left">
-      <img src="download.png" alt="WHO Logo" class="logo">
+      <!-- WHO logo -->
+      <img src="download.png" alt="WHO Logo" class="logo-img">
+      <!-- Search box -->
+      <input type="search" placeholder="Search...">
     </div>
 
-    <!-- Middle: search bar -->
-    <div class="search-bar">
-      <input type="text" placeholder="Search...">
-    </div>
-
-    <!-- Right side: navigation links -->
+    <!-- Navigation links -->
     <nav>
       <a href="#">Home</a>
       <a href="#">About</a>
@@ -30,32 +25,51 @@
     </nav>
   </header>
 
- 
-  <main>
-    <!-- Page heading -->
-    <h1>Global Vaccine Trends</h1>
+  <!-- Main title -->
+  <h1>Global Vaccine Trends</h1>
 
-    <!-- Three info cards showing  data -->
-    <div class="cards">
-      <div class="card">
-        <p>Flu Vaccine Percentage in Australia</p>
-        <h2>95%</h2>
-      </div>
+  <!-- Two-column layout: chart on left, table on right -->
+  <div class="container">
 
-      <div class="card">
-        <p>Total Vaccines Administered</p>
-        <h2>3.2 Bill</h2>
-      </div>
-
-      <div class="card">
-        <p>Total Cases of Preventable Diseases</p>
-        <h2>25 Mill</h2>
-      </div>
+    <!-- Chart area -->
+    <div class="chart-box">
+      <label for="antigen">Antigen</label>
+      <select id="antigen">
+        <option>Measles</option>
+        <option>Polio</option>
+        <option>COVID-19</option>
+      </select>
+      <!-- Placeholder where a chart will go -->
+      <div class="chart-placeholder">Chart will display here</div>
     </div>
 
-    <!-- Explore button -->
-    <button class="explore-btn">EXPLORE MORE</button>
-  </main>
+    <!-- Data table area -->
+    <div class="table-box">
+      <label for="year">Year</label>
+      <select id="year">
+        <option>2000</option>
+        <option>2020</option>
+        <option selected>2024</option>
+      </select>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>2000</th>
+            <th>2024</th>
+            <th>Improvement</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Uganda</td><td>60%</td><td>95%</td><td>+35%</td></tr>
+          <tr><td>Australia</td><td>80%</td><td>96%</td><td>+16%</td></tr>
+          <tr><td>UK</td><td>85%</td><td>97%</td><td>+12%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
 
 </body>
 </html>
