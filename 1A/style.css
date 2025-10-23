@@ -1,45 +1,38 @@
-/* General page setup */
 body {
     font-family: Arial, sans-serif;
+    background-color: #fafafa;
     margin: 0;
-    background: #fff;
-    color: #111;
+    text-align: center;
   }
   
-  /* Header bar */
+  /* Header section */
   header {
-    background: #4da6ff;
+    background-color: #59a9ff;
+    padding: 10px 30px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 10px 20px;
-  }
-  
-  /* Left side of header (logo + search) */
-  .header-left {
-    display: flex;
     align-items: center;
-    gap: 15px;
   }
   
-  /* Logo image */
-  .logo-img {
-    height: 40px;
+  /* WHO logo */
+  .logo {
+    height: 50px;
   }
   
-  /* Search box */
-  input[type="search"] {
-    padding: 6px 10px;
-    border-radius: 15px;
+  /* Search bar styling */
+  .search-bar input {
+    width: 300px;
+    padding: 8px 12px;
+    border-radius: 20px;
     border: none;
-    width: 200px;
+    outline: none;
   }
   
-  /* Navigation links */
+  /* Navigation links at top right */
   nav a {
-    margin: 0 12px;
+    color: #fff;
     text-decoration: none;
-    color: #000;
+    margin: 0 15px;
     font-weight: bold;
   }
   
@@ -47,68 +40,66 @@ body {
     text-decoration: underline;
   }
   
+  /* Main page layout */
+  main {
+    margin-top: 30px;
+  }
+  
   /* Page title */
   h1 {
-    text-align: center;
-    margin: 30px 0;
+    font-size: 28px;
+    color: #000;
+    margin-bottom: 30px;
   }
   
-  /* Layout for chart and table */
-  .container {
+  /* Layout for the cards */
+  .cards {
     display: flex;
     justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-    padding-bottom: 40px;
-  }
-  
-  /* Chart and table boxes */
-  .chart-box, .table-box {
-    border: 2px solid #000;
-    background: #fff;
-    padding: 20px;
-    width: 420px;
-    border-radius: 5px;
-  }
-  
-  /* Labels and dropdowns */
-  label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 6px;
-  }
-  
-  select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-  }
-  
-  /* Table style */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-  }
-  
-  th, td {
-    border: 1px solid #000;
-    padding: 8px;
-  }
-  
-  th {
-    background: #f2f2f2;
-  }
-  
-  /* Placeholder for chart */
-  .chart-placeholder {
-    width: 100%;
-    height: 250px;
-    border: 1px dashed #aaa;
-    display: flex;
     align-items: center;
-    justify-content: center;
-    color: #777;
-    font-style: italic;
+    gap: 20px;
   }
   
+  /* Individual cards */
+  .card {
+    background: white;
+    border: 2px solid #000;
+    border-radius: 20px;
+    padding: 20px;
+    width: 200px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Text inside cards */
+  .card p {
+    font-weight: bold;
+    margin: 5px 0;
+  }
+  
+  .card h2 {
+    margin: 10px 0;
+    font-size: 26px;
+    color: #003366;
+  }
+  
+  /* Explore button */
+  .explore-btn {
+    background-color: #59a9ff;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 30px;
+  }
+  
+  .explore-btn:hover {
+    background-color: #4a95e8;
+  }
