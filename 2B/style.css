@@ -2,26 +2,25 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 30px 40px;
-  background: #444;
-  color: #fff;
-  font-size: 1.25rem;
+  padding: 10px 30px;
+  background: #59a9ff;
 }
 
 header nav .logo {
-    flex: 1;
-    font-size: 1.5rem;
+    height: 50px;
 }
 
 header nav input[type="search"] {
-    flex: 2;
-    max-width: 400px;
-    margin: 0 40px;
+    width: 300px;
     padding: 8px 12px;
-    font-size: 1rem;
+    border-radius: 20px;
+    border: none;
+    outline: none;
 }
 
 header nav a {
-    margin-left: 40px;
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
 }
-
