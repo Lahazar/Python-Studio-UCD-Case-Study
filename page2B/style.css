@@ -24,3 +24,103 @@ header nav a {
     margin: 0 15px;
     font-weight: bold;
 }
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f7fb;
+    margin: 0;
+}
+
+.dashboard-card {
+    background: #fff;
+    border-radius: 14px;
+    margin: 36px auto;
+    box-shadow: 0 5px 18px rgba(85,105,180,0.11);
+    max-width: 900px;
+    padding: 30px 36px;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #2a519d;
+    letter-spacing: 1px;
+}
+
+/* Filters form */
+.filters {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.filters label {
+    font-weight: 500;
+    color: #24407b;
+}
+.filters select {
+    background: #eaf2fd;
+    border-radius: 6px;
+    border: 1px solid #cfd8e3;
+    padding: 8px 12px;
+    margin-left: 6px;
+    font-size: 1rem;
+}
+.filters button {
+    background: #2a519d;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 8px 22px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.filters button:hover {
+    background: #447edd;
+}
+
+/* Data Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.06rem;
+    background: white;
+    margin-top: 12px;
+    border-radius: 7px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+th, td {
+    padding: 11px 18px;
+    text-align: left;
+}
+
+th {
+    background: #2a519d;
+    color: white;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background: #eaf2fd;
+}
+tr:hover {
+    background: #d7e7fa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .dashboard-card {
+        padding: 20px 10px;
+    }
+    .filters {
+        gap: 10px;
+    }
+    table th, table td {
+        padding: 7px 8px;
+        font-size: 0.96rem;
+    }
+}
