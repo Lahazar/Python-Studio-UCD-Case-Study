@@ -246,19 +246,21 @@ def get_page_html(form_data):
             </div>
 
             <div class="fact-box">
-                <a href="page_1b.html">
+                <a href="/page1b.html">
                     <p>Mission Statement<br>(purpose, personas, team info)</p>
                 </a>
             </div>
 
             <div class="fact-box">
-                <a href="page_2b.html">
+                <a href="/page2b.html">
                     <p>Infection data by economic status</p>
                 </a>
             </div>
 
             <div class="fact-box">
-                <p>Countries above average infection rate</p>
+                <a href="/page3b.html">
+                    <p>Countries above average infection rate</p>
+                </a>
             </div>
         </div>
 

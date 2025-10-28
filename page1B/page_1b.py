@@ -20,7 +20,7 @@ def get_page_html(formdata):
                     </div>
 
                     <div class="nav-right">
-                        <a href="index.html">Home</a>
+                        <a href="/">Home</a>
                         <a href="#">About</a>
                         <a href="#">Contact</a>
                     </div>
@@ -36,7 +36,7 @@ def get_page_html(formdata):
                     <button>Learn More</button>
                 </section>
             </main>
-
+        
         </body>
     </html>
     """

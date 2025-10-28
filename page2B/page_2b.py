@@ -138,7 +138,7 @@ def get_page_html(formdata):
                     <input type="search" placeholder="Search..."/>
                 </div>
                 <div class="nav-right">
-                    <a href="index.html">Home</a>
+                    <a href="/">Home</a>
                     <a href="#">About</a>
                     <a href="#">Contact</a>
                 </div>
