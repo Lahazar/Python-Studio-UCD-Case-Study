@@ -1,0 +1,156 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 30px;
+  background: #59a9ff;
+}
+
+header nav .logo {
+    height: 50px;
+}
+
+header nav input[type="search"] {
+    width: 300px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+/* Reset some basics */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f0f4ff;
+  color: #24407b;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3a78d8;
+  padding: 10px 30px;
+  color: white;
+}
+
+.navbar .logo {
+  height: 40px;
+}
+
+.navbar a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+.nav-center input[type="search"] {
+  width: 300px;
+  padding: 6px 10px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+}
+
+.dashboard-card {
+  max-width: 1000px;
+  margin: 30px auto;
+  background: white;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 0 12px rgb(60 71 95 / 8%);
+}
+
+.dashboard-card h1 {
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #2a519d;
+}
+
+.filters {
+  margin-bottom: 20px;
+}
+
+.filters label {
+  margin-right: 18px;
+  font-weight: bold;
+  color: #24407b;
+}
+
+.filters select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  min-width: 140px;
+  margin-left: 6px;
+}
+
+.filters button {
+  background: #2a519d;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 12px;
+}
+
+.filters button:hover {
+  background: #1e3a76;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 1px 8px rgb(60 71 95 / 8%);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th, td {
+  text-align: left;
+  padding: 12px 18px;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 15px;
+  color: #152c5b;
+}
+
+th {
+  background-color: #2a519d;
+  color: white;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f8faff;
+}
+
+/* Summary panel for stats next to chart */
+.summary-panel {
+  font-size: 16px;
+  color: #24407b;
+}
+
+.summary-panel div {
+  margin-bottom: 8px;
+}
