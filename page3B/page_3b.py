@@ -22,7 +22,6 @@ def get_page_html(formdata):
         params.append(selected_type)
     where_sql = " AND " + " AND ".join(filter_clause) if filter_clause else ""
 
-    # This LEFT JOIN ensures all regions are listed
     sql = f"""
     SELECT 
         r.region, 

@@ -1,7 +1,4 @@
 import sqlite3
-import matplotlib.pyplot as plt
-import numpy as np
-import os
 
 def get_page_html(formdata):
     selected_type = formdata.get("inf_type", [""])[0]
@@ -16,7 +13,6 @@ def get_page_html(formdata):
     all_countries = [r["country"] for r in cursor.execute("SELECT DISTINCT country FROM InfectionData").fetchall()]
     all_years = [str(r["year"]) for r in cursor.execute("SELECT DISTINCT year FROM InfectionData").fetchall()]
 
-    # -- Data query for table --
     sql = """
     SELECT
         i.country,
@@ -43,36 +39,12 @@ def get_page_html(formdata):
     sql += " ORDER BY i.year DESC, i.country, i.inf_type LIMIT 50"
     rows = cursor.execute(sql, params).fetchall()
 
-    # --- BAR CHART DATA (Top 10 countries by total cases, filter applied) ---
-    chart_data_sql = f"""
-    SELECT i.country, SUM(i.cases) AS total_cases
-    FROM InfectionData i
-    {"WHERE " + " AND ".join(filters) if filters else ""}
-    GROUP BY i.country
-    ORDER BY total_cases DESC
-    LIMIT 10
-    """
-    chart_cursor = conn.cursor()
-    chart_data = chart_cursor.execute(chart_data_sql, params).fetchall()
     conn.close()
 
-    chart_path = "page2B/bar_chart.png"
-    if chart_data:
-        countries = [row["country"] for row in chart_data]
-        cases = [row["total_cases"] for row in chart_data]
-        plt.figure(figsize=(8,4))
-        plt.bar(countries, cases, color="#26529e")
-        plt.xlabel("Country")
-        plt.ylabel("Total Cases")
-        plt.title("Top 10 Countries by Infection Cases")
-        plt.tight_layout()
-        plt.savefig(chart_path)
-        plt.close()
-
-    # --- SUMMARY PANEL (Total, average, country count) ---
-    case_list = [row['cases'] for row in rows if row['cases'] is not None]
-    total_cases = int(np.nansum(case_list)) if case_list else 0
-    avg_cases = float(np.nanmean(case_list)) if case_list else 0
+    # Simple summary calculations here without numpy
+    total_cases = sum(row['cases'] for row in rows if row['cases'] is not None)
+    count_cases = sum(1 for row in rows if row['cases'] is not None)
+    avg_cases = (total_cases / count_cases) if count_cases > 0 else 0
     country_count = len(set(row['country'] for row in rows if row['country']))
 
     summary_html = f"""
@@ -80,17 +52,6 @@ def get_page_html(formdata):
         <div><strong>Total Cases:</strong> {total_cases}</div>
         <div><strong>Average Cases:</strong> {avg_cases:.1f}</div>
         <div><strong>Countries:</strong> {country_count}</div>
-    </div>
-    """
-
-    chart_html = f"""
-    <img src="page2B/bar_chart.png" alt="Top 10 Countries Bar Chart" style="width:600px;max-width:100%;margin-bottom:18px;border-radius:8px;background:#fff;">
-    """ if os.path.exists(chart_path) else "<div>No chart available.</div>"
-
-    chart_and_summary = f"""
-    <div style="display:flex;flex-direction:row;align-items:flex-start;margin-bottom:18px;">
-        {chart_html}
-        {summary_html}
     </div>
     """
 
@@ -147,7 +108,7 @@ def get_page_html(formdata):
         <main>
             <section class="dashboard-card">
                 <h1>Infection Data by Country and Population</h1>
-                {chart_and_summary}
+                {summary_html}
                 {filter_form}
                 <table>
                     <thead>
