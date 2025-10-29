@@ -47,7 +47,6 @@ h1 {
     letter-spacing: 1px;
 }
 
-/* Filters form */
 .filters {
     display: flex;
     gap: 20px;
@@ -81,7 +80,6 @@ h1 {
     background: #447edd;
 }
 
-/* Data Table */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -111,7 +109,6 @@ tr:hover {
     background: #d7e7fa;
 }
 
-/* Responsive adjustments */
 @media (max-width: 900px) {
     .dashboard-card {
         padding: 20px 10px;
@@ -123,4 +120,20 @@ tr:hover {
         padding: 7px 8px;
         font-size: 0.96rem;
     }
+}
+
+form.filters button[name="export"] {
+    background-color: #2a519d;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    margin-left: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form.filters button[name="export"]:hover {
+    background-color: #203d7a;
 }

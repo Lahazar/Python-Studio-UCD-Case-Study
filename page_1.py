@@ -253,13 +253,13 @@ def get_page_html(form_data):
 
             <div class="fact-box">
                 <a href="/page2b.html">
-                    <p>Infection data by economic status</p>
+                    <p>Infection Data by Country and Population</p>
                 </a>
             </div>
 
             <div class="fact-box">
                 <a href="/page3b.html">
-                    <p>Countries above average infection rate</p>
+                    <p>Infection Data by Region</p>
                 </a>
             </div>
         </div>

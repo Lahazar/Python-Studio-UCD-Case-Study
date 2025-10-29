@@ -24,7 +24,7 @@ header nav a {
     margin: 0 15px;
     font-weight: bold;
 }
-/* Reset some basics */
+
 * {
   margin: 0;
   padding: 0;
@@ -119,7 +119,6 @@ body {
   background: #1e3a76;
 }
 
-/* Table styling */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -145,7 +144,6 @@ tbody tr:nth-child(even) {
   background-color: #f8faff;
 }
 
-/* Summary panel for stats next to chart */
 .summary-panel {
   font-size: 16px;
   color: #24407b;

@@ -73,6 +73,7 @@ def get_page_html(formdata):
             <select name="inf_type"><option value="">All</option>{options(all_types, selected_type)}</select>
         </label>
         <button type="submit">Filter</button>
+        <button type="submit" name="export" value="1">Export CSV</button>
     </form>
     """
 
