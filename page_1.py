@@ -8,11 +8,12 @@ def get_page_html(form_data):
     # query for main statistics (Spain, Italy, Argentina)
     try:
         query_main = """
-            SELECT country, AVG(coverage)
+            SELECT Country.name AS country, AVG(Vaccination.coverage) AS avg_coverage
             FROM Vaccination
-            WHERE country IN ('ESP', 'ITA', 'ARG')
-            GROUP BY country
-            ORDER BY country;
+            JOIN Country ON Country.CountryID = Vaccination.country
+            WHERE Country.name IN ('Spain', 'Italy', 'Argentina')
+            GROUP BY Country.name
+            ORDER BY Country.name;
         """
         results_main = pyhtml.get_results_from_query(db_path, query_main)
         if results_main:
@@ -21,20 +22,23 @@ def get_page_html(form_data):
                 for r in results_main
             )
         else:
-            main_stats = "<p>No data for Australia, UK, or USA.</p>"
+            main_stats = "<p>No data for Spain, Italy, or Argentina.</p>"
     except Exception as e:
         main_stats = f"<p>Database Error (Main Stats): {e}</p>"
 
     # query for top 3 improvements in vaccination coverage
     try:
         query_improve = """
-            SELECT v1.country, (v2.coverage - v1.coverage) AS improvement
-            FROM Vaccination v1
-            JOIN Vaccination v2
-                ON v1.country = v2.country
-                AND v2.year = v1.year + 1
-            WHERE v2.coverage > v1.coverage
-            GROUP BY v1.country
+            SELECT 
+                c.name AS country,
+                (v2024.coverage - v2020.coverage) AS improvement
+            FROM Vaccination v2020
+            JOIN Vaccination v2024
+                ON v2020.country = v2024.country
+                AND v2020.antigen = v2024.antigen
+            JOIN Country c ON c.CountryID = v2020.country
+            WHERE v2020.year = 2020 AND v2024.year = 2024
+            GROUP BY c.name
             ORDER BY improvement DESC
             LIMIT 3;
         """
@@ -221,12 +225,12 @@ def get_page_html(form_data):
         <!-- New top statistics section -->
         <div class="stats-section">
             <div class="stat-box">
-                <h2>Spain, Italy, Argentinia Stats</h2>
+                <h2>Spain, Italy, Argentina Stats</h2>
                 {main_stats}
             </div>
 
             <div class="stat-box">
-                <h2>Top 3 Vaccine Improvements</h2>
+                <h2>Top 3 Vaccine Improvements (2020–2024)</h2>
                 {improve_stats}
             </div>
         </div>
@@ -234,33 +238,23 @@ def get_page_html(form_data):
         <!-- Original facts section -->
         <div class="facts">
             <div class="fact-box">
-                <a href="page_2.html">
-                    <p>Vaccination rates by country/region</p>
-                </a>
+                <a href="page_2.html"><p>Vaccination rates by country/region</p></a>
             </div>
 
             <div class="fact-box">
-                <a href="page_3.html">
-                    <p>Countries with biggest vaccination improvement</p>
-                </a>
+                <a href="page_3.html"><p>Countries with biggest vaccination improvement</p></a>
             </div>
 
             <div class="fact-box">
-                <a href="/page1b.html">
-                    <p>Mission Statement</p>
-                </a>
+                <a href="/page1b.html"><p>Mission Statement<br>(purpose, personas, team info)</p></a>
             </div>
 
             <div class="fact-box">
-                <a href="/page2b.html">
-                    <p>Infection Data by Country and Population</p>
-                </a>
+                <a href="/page2b.html"><p>Infection Data by Country and Population</p></a>
             </div>
 
             <div class="fact-box">
-                <a href="/page3b.html">
-                    <p>Infection Data by Region</p>
-                </a>
+                <a href="/page3b.html"><p>Infection Data by Region</p></a>
             </div>
         </div>
 
