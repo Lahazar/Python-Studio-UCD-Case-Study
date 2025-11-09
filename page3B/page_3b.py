@@ -1,35 +1,40 @@
 import sqlite3
 
 def get_page_html(formdata):
-    selected_type = formdata.get("inf_type", [""])[0]
-    selected_year = formdata.get("year", [""])[0]
+    selected_type = formdata.get("inf_type", [""])[0].strip()
+    selected_year = formdata.get("year", [""])[0].strip()
 
     conn = sqlite3.connect('immunisation.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
-    all_types = [r["inf_type"] for r in cursor.execute("SELECT DISTINCT inf_type FROM InfectionData").fetchall()]
-    all_years = [str(r["year"]) for r in cursor.execute("SELECT DISTINCT year FROM InfectionData").fetchall()]
-    all_regions = [r["region"] for r in cursor.execute("SELECT region FROM Region").fetchall()]
+    all_types = [r["inf_type"] for r in cursor.execute(
+        "SELECT DISTINCT inf_type FROM InfectionData").fetchall()]
+    all_years = [str(r["year"]) for r in cursor.execute(
+        "SELECT DISTINCT year FROM InfectionData").fetchall()]
+    all_regions = [r["region"] for r in cursor.execute(
+        "SELECT DISTINCT region FROM Region").fetchall()]
 
-    filter_clause = []
+    where_filters = []
     params = []
     if selected_year:
-        filter_clause.append("i.year = ?")
+        where_filters.append("i.year = ?")
         params.append(selected_year)
     if selected_type:
-        filter_clause.append("i.inf_type = ?")
+        where_filters.append("i.inf_type = ?")
         params.append(selected_type)
-    where_sql = " AND " + " AND ".join(filter_clause) if filter_clause else ""
+    where_clause = "WHERE " + " AND ".join(where_filters) if where_filters else ""
 
+    # Join on RegionID (robust version)
     sql = f"""
     SELECT 
-        r.region, 
+        r.region AS region_name,
         COALESCE(SUM(i.cases), 0) AS total_cases
     FROM Region r
-    LEFT JOIN Country c ON r.region = c.region
-    LEFT JOIN InfectionData i ON c.name = i.country{' AND ' + ' AND '.join(filter_clause) if filter_clause else ''}
-    GROUP BY r.region
+    LEFT JOIN Country c ON r.RegionID = c.region
+    LEFT JOIN InfectionData i ON c.countryID = i.country
+    {where_clause}
+    GROUP BY r.RegionID, r.region
     ORDER BY r.region
     """
 
@@ -55,7 +60,7 @@ def get_page_html(formdata):
     """
 
     table_rows = "".join(
-        f"<tr><td>{row['region']}</td><td>{row['total_cases']}</td></tr>"
+        f"<tr><td>{row['region_name']}</td><td>{row['total_cases']}</td></tr>"
         for row in rows
     ) if rows else "<tr><td colspan='2'>No data found for selected filters.</td></tr>"
 
@@ -78,7 +83,7 @@ def get_page_html(formdata):
                 </div>
                 <div class="nav-right">
                     <a href="/">Home</a>
-                    <a href="#">About</a>
+                    <a href="/page1b.html">About</a>
                     <a href="#">Contact</a>
                 </div>
             </nav>

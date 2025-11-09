@@ -47,7 +47,7 @@ def get_page_html(formdata):
                     </div>
                     <div class="nav-right">
                         <a href="/">Home</a>
-                        <a href="#">About</a>
+                        <a href="/page1b.html">About</a>
                         <a href="#">Contact</a>
                     </div>
                 </nav>

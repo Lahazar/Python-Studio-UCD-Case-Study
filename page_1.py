@@ -247,7 +247,7 @@ def get_page_html(form_data):
 
             <div class="fact-box">
                 <a href="/page1b.html">
-                    <p>Mission Statement<br>(purpose, personas, team info)</p>
+                    <p>Mission Statement</p>
                 </a>
             </div>
 
