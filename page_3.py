@@ -5,7 +5,7 @@ def get_page_html(form_data):
 
     db_path = "immunisation.db"
 
-    # Dropdown options
+  
     countries = [row[0] for row in pyhtml.get_results_from_query(
         db_path, "SELECT DISTINCT Country.name FROM Country ORDER BY Country.name;"
     )]
@@ -13,12 +13,13 @@ def get_page_html(form_data):
         db_path, "SELECT DISTINCT Antigen.name FROM Antigen ORDER BY Antigen.name;"
     )]
 
+    # Get form data 
     selected_country = form_data.get("country", ["All"])[0]
     selected_antigen = form_data.get("antigen", ["All"])[0]
     top10 = form_data.get("top10", ["false"])[0].lower() == "true"
 
-    # SQL query: join Vaccination + Country + Antigen, compare 2020 vs 2024
-    query = """
+    # SQL Query: Compare coverage between 2020 and 2024 using subquery
+    query = f"""
         SELECT 
             Country.name AS country,
             Antigen.name AS antigen,
@@ -26,13 +27,21 @@ def get_page_html(form_data):
             v2024.coverage AS coverage_2024,
             (v2024.coverage - v2020.coverage) AS improvement
         FROM Vaccination v2020
-        JOIN Vaccination v2024 
-            ON v2020.country = v2024.country 
-            AND v2020.antigen = v2024.antigen
         JOIN Country ON Country.CountryID = v2020.country
         JOIN Antigen ON Antigen.AntigenID = v2020.antigen
+        JOIN Vaccination v2024 
+            ON v2024.country = v2020.country 
+            AND v2024.antigen = v2020.antigen
         WHERE v2020.year = 2020
           AND v2024.year = 2024
+          AND EXISTS (
+              SELECT 1 
+              FROM Vaccination v_sub
+              WHERE v_sub.country = v2020.country
+                AND v_sub.antigen = v2020.antigen
+                AND v_sub.year = 2024
+                AND v_sub.coverage > v2020.coverage
+          )
     """
 
     if selected_country != "All":
@@ -43,9 +52,10 @@ def get_page_html(form_data):
     query += " ORDER BY improvement DESC"
     query += " LIMIT 10;" if top10 else " LIMIT 50;"
 
+    # Execute SQL
     results = pyhtml.get_results_from_query(db_path, query)
 
-    # Dropdown builders
+    # Dropdown HTML builder
     def make_options(values, selected):
         html = '<option value="All">All</option>'
         for v in values:
@@ -56,16 +66,22 @@ def get_page_html(form_data):
     country_options = make_options(countries, selected_country)
     antigen_options = make_options(antigens, selected_antigen)
 
-    # Table rows
+    # Table content
     if results:
         rows_html = "".join(
-            f"<tr><td>{r[0]}</td><td>{r[1]}</td><td>{r[2]}%</td><td>{r[3]}%</td><td>+{round(r[4],2)}%</td></tr>"
+            f"<tr>"
+            f"<td>{r[0]}</td>"
+            f"<td>{r[1]}</td>"
+            f"<td>{r[2] or 'N/A'}%</td>"
+            f"<td>{r[3] or 'N/A'}%</td>"
+            f"<td>{'+' if r[4] >= 0 else ''}{round(r[4], 2) if r[4] is not None else 'N/A'}%</td>"
+            f"</tr>"
             for r in results
         )
     else:
         rows_html = "<tr><td colspan='5'>No data available</td></tr>"
 
-    # HTML page
+    # --- HTML PAGE ---
     return f"""
     <!DOCTYPE html>
     <html lang="en">
@@ -135,6 +151,12 @@ def get_page_html(form_data):
             input[type="submit"]:hover, .top10-btn:hover {{
                 background-color: #3385cc;
             }}
+            .top10-btn {{
+                background-color: #ff9933;
+            }}
+            .top10-btn:hover {{
+                background-color: #e68a00;
+            }}
             table {{
                 margin: 30px auto;
                 border-collapse: collapse;
@@ -181,7 +203,6 @@ def get_page_html(form_data):
 
         <h1>Countries with Biggest Vaccine Improvement (2020–2024)</h1>
 
-        <!-- Unified Filter + Top 10 Button -->
         <form method="get" action="/page_3.html">
             <label for="country">Country:</label>
             <select name="country">{country_options}</select>
@@ -191,7 +212,9 @@ def get_page_html(form_data):
 
             <input type="submit" value="Filter">
 
-            <button class="top10-btn" type="submit" name="top10" value="true">Top 10 Improvements</button>
+            <button class="top10-btn" type="submit" name="top10" value="true">
+                Top 10 Improvements
+            </button>
         </form>
 
         <table>
@@ -209,3 +232,4 @@ def get_page_html(form_data):
     </body>
     </html>
     """
+
